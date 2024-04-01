@@ -34,7 +34,7 @@ class IRSystem():
         print()
 
     def _get_posting_list(self, word):
-        return [doc_id for doc_id in self.inverted_index[word].tree_data() if doc_id != None]
+        return [doc_id for doc_id in self.inverted_index[word].tree_data()]
     
     def _parse_query(self, infix_tokens):
         """ Parse Query 
@@ -81,9 +81,6 @@ class IRSystem():
         return output
     
     def process_query(self, query):
-        query = query.replace('(', '( ')
-        query = query.replace(')', ' )')
-        query = query.split(' ')
 
         indexed_docIDs = list(range(1, len(self.docs) + 1))
 
@@ -104,10 +101,13 @@ class IRSystem():
                 right_op = results_stack.pop()
                 results_stack.append(BooleanModel.not_op(right_op, indexed_docIDs))
             else:
-                results_stack.append(self._get_posting_list(token))
+                try:
+                    results_stack.append(self._get_posting_list(token))
+                except KeyError:
+                    results_stack.append([])
 
 
-        if len(results_stack) != 1:
-            raise ValueError('Invalid query')
+        if results_stack.pop == []:
+            raise ValueError('One or more terms not present in any document.')
         
         return results_stack.pop()
