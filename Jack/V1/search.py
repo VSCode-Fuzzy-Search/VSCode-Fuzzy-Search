@@ -7,20 +7,25 @@ import os
 docs = []
 folder_path = "Jack/documents"
 
-for filename in os.listdir(folder_path):
-    file_path = os.path.join(folder_path, filename)
-    if os.path.isfile(file_path):
-        with open(file_path, 'r') as file:
-            doc = file.read()
-            docs.append(doc)
+def sort_file_dir(folder_path):
+    items= os.listdir(folder_path)
+    items.sort()
+    print(f'items: {items}')
+    return items
 
-
-def parse_args():
-    parser = argparse.ArgumentParser(description='Information Retrieval System Configuration')
-    return parser.parse_args()
+def get_files(folder_path):
+    items = sort_file_dir(folder_path)
+    docs = []
+    for item in items:
+        file_path = os.path.join(folder_path, item)
+        if os.path.isfile(file_path):
+            with open(file_path, 'r') as f:
+                docs.append(f.read())
+    print(docs)
+    return docs
 
 def main():
-    args = parse_args()
+    docs = get_files(folder_path)
     ir = IRSystem(docs)
     ir._print_inverted_index()
 

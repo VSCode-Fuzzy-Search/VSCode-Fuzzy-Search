@@ -16,13 +16,13 @@ class IRSystem():
         Preprocess the documents
         """
         index = {}
-        for i, doc in enumerate(self.docs):
+        for i, doc in enumerate(self.docs, start=1):
             for word in re.findall(r"[\w']+", doc):
+                print(f'word: {word}, doc_id: {i}')
                 try:
-                    index[word].insert(i + 1)
+                    index[word].insert(i)
                 except KeyError:
-                    index[word] = Node(i + 1)
-
+                    index[word] = Node(i)
         return index
     
     
