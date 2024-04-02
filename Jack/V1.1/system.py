@@ -41,7 +41,6 @@ class IRSystem():
 
 
         for token in query:
-            print(query)
             if (token == '('):
                 operator_stack.append(token)
             
