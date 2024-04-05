@@ -63,6 +63,16 @@ class BooleanSearchModel():
 
         return res
 
+    def ORNOT(right, docs):
+        res = []
+        r_index = 0
+        for doc in docs:
+            if doc == right[r_index]:
+                if r_index + 1 < len(right):
+                    r_index += 1
+            else:
+                res.append(doc)
+        return res
 
     def WILDCARD(left, docs):
         raise NotImplementedError("Wildcard search not implemented yet")

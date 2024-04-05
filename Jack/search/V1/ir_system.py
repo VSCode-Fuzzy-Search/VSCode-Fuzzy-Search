@@ -78,6 +78,7 @@ class IRSystem():
         while (operator_stack):
             output.append(operator_stack.pop())
 
+        print (output)
         return output
     
     def process_query(self, query):

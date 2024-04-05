@@ -4,7 +4,12 @@ import timeit
 from ir_system import IRSystem
 import os
 
-docs = []
+docs = [
+    'The quick brown fox jumps over the lazy dog',
+    'The quick brown fox jumps over the quick dog',
+    'The quick brown fox jumps over the quick dog',
+    'Test doc'
+]
 folder_path = "Jack/documents"
 
 def sort_file_dir(folder_path):
@@ -25,7 +30,7 @@ def get_files(folder_path):
     return docs
 
 def main():
-    docs = get_files(folder_path)
+    # docs = get_files(folder_path)
     ir = IRSystem(docs)
     ir._print_inverted_index()
 

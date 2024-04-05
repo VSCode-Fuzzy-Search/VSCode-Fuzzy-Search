@@ -30,6 +30,7 @@ class IRSystem():
     
     def parse(self, query):
         precedence = {}
+        precedence['*'] = 4
         precedence['NOT'] = 3
         precedence['AND'] = 2
         precedence['OR'] = 1
@@ -71,6 +72,7 @@ class IRSystem():
     def process(self, query):
         query = query.replace('(', '( ')
         query = query.replace(')', ' )')
+        query = query.replace('*', ' * ')
         query = query.split(' ')
 
         docIDs = list(range(1, len(self.docs)+1))
@@ -81,6 +83,7 @@ class IRSystem():
 
         while queue:
             token = queue.popleft()
+            result = []
             if token != 'AND' and token != 'OR' and token != 'NOT' and token != '*':
                 if token in self.inverted_index:
                     result = self.get_posting_list(token)
@@ -97,7 +100,7 @@ class IRSystem():
                 result = BooleanSearchModel.ANDNOT(right, docIDs)
             elif token == '*':
                 left = results.pop()
-                result = BooleanSearchModel.WILDCARD(left)
+                result = BooleanSearchModel.WILDCARD(left, docIDs)
             results.append(result)
 
         return results.pop()
