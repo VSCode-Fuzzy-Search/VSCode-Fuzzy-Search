@@ -12,3 +12,4 @@ class Collection:
         probabilities = []
         for file in self.files:
             probabilities.append(file.get_probability(query))
+        return probabilities
