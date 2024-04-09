@@ -10,7 +10,8 @@ class File:
         with open(path, 'r') as file:
             for line in file:
                 for word in line.split():
-                    self.text[word] = self.text.get(word, 0) + 1
+                    w = word.lower()
+                    self.text[w] = self.text.get(w, 0) + 1
                     self.total_words += 1
     
     def get_probability(self, query):

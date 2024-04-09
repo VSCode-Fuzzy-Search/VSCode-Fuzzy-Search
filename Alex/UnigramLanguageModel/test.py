@@ -11,5 +11,9 @@ for i in range(1, 4):
     file = File(file_path)
     collection.add_file(file)
 
-print(collection.search_collection('the quick brown fox'))
-print(collection.search_collection('the'))
+
+while True:
+    query = input('Enter query: ')
+    if query == 'exit':
+        break
+    print(collection.search_collection(query))
