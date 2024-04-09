@@ -1,0 +1,3 @@
+1. get_unit_vector as a method in tf-weighting.py instead of a class method in vector.py
+    - using type hinting showed that having a method in the Vector class return a Vector type requires forward
+        referencing which is a code smell.
