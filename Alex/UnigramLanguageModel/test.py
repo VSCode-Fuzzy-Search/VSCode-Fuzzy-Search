@@ -16,4 +16,4 @@ while True:
     query = input('Enter query: ')
     if query == 'exit':
         break
-    print(collection.search_collection(query))
+    collection.search_collection(query)
