@@ -33,6 +33,10 @@ export class DocumentPosting {
         return this._positions.value;
     }
 
+    public get document(): Document {
+        return this._document;
+    }
+
     public markDirty() {
         this._termFrequency.markDirty();
         this._tf_idf.markDirty();

@@ -8,7 +8,10 @@ export class LateInitMap<K, V> implements ILateInit<V>, Map<K, V> {
 
     private _value: Map<K, LateInit<V>> = new Map();
 
-    constructor(private _init: (key: K) => ILateInit<V>, private _dependencies?: ILateInit<unknown>[]) { }
+    constructor(
+        private _initKey: (key: K) => ILateInit<V>,
+        private _dependencies?: ILateInit<unknown>[]
+    ) { }
 
     //#// Map Implementation //#//
     clear(): void { this._value.clear(); }
@@ -52,7 +55,7 @@ export class LateInitMap<K, V> implements ILateInit<V>, Map<K, V> {
      * @returns The value for the key.
      */
     public get(key: K): V {
-        return this._value.get(key)?.value ?? this._init(key).value;
+        return this._value.get(key)?.value ?? this._initKey(key).value;
     }
 
     /**

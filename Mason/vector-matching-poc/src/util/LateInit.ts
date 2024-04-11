@@ -4,7 +4,7 @@ export class LateInit<T> implements ILateInit<T> {
     private _value?: T;
     private _dirty = true;
 
-    constructor(private _init: () => T, private _dependencies?: ILateInit<unknown>[]) { }
+    constructor(private _init: () => T, private _dependencies: ILateInit<unknown>[] = []) { }
 
     get value() {
         // If the value has been marked as dirty, cause it to be recomputed.
@@ -17,7 +17,7 @@ export class LateInit<T> implements ILateInit<T> {
     }
 
     public markDirty() {
-        this._dependencies?.forEach(dep => dep.markDirty());
+        this._dependencies.forEach(dep => dep.markDirty());
         this._dirty = true;
     }
 
@@ -26,15 +26,14 @@ export class LateInit<T> implements ILateInit<T> {
     }
 
     public addDependency(dependency: ILateInit<unknown>) {
-        this._dependencies ??= [];
         this._dependencies.push(dependency);
     }
 
     public addDependencies(dependencies: ILateInit<unknown>[]) {
-        dependencies.forEach(this.addDependency);
+        dependencies.forEach(dep => this.addDependency(dep));
     }
 
     public get dependencies(): ReadonlyArray<ILateInit<unknown>> {
-        return this._dependencies ?? [];
+        return this._dependencies;
     }
 }

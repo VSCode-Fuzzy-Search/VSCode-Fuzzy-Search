@@ -1,5 +1,4 @@
 import { LateInit } from "../util/LateInit";
-import { Vector } from "./Vector";
 
 export class Document {
 
@@ -14,20 +13,29 @@ export class Document {
      * - The frequency of each term in the document.
      * This effectively acts as our 'bag of words' model.
      */
-    private _vocabularyMapping: LateInit<WordMapping> = new LateInit(this.processVocabulary);
+    private _vocabularyMapping: LateInit<WordMapping> = new LateInit(this.processVocabulary.bind(this));
 
-    constructor(content: string) {
-
-        // Define a setter for the content property that marks the vocabulary mapping as dirty when the content is modified.
-        Object.defineProperty(this, '_content', {
-            writable: true,
-            set: (value: string) => {
-                this._content = value;
-                this._vocabularyMapping.markDirty();
-            }
-        });
-
+    /**
+     * Create a new document.
+     * @param content The raw text content of the document.
+     */
+    constructor(content: string = '') {
         this._content = content;
+    }
+
+    /**
+     * Set the content of the document.
+     */
+    protected set content(value: string) {
+        this._content = value;
+        this._vocabularyMapping.markDirty();
+    }
+
+    /**
+     * Get the content of the document.
+     */
+    public get content(): string {
+        return this._content;
     }
 
     /**
@@ -53,21 +61,14 @@ export class Document {
     }
 
     /**
-     * Get the vector representation of the document.
-     */
-    public getVector(other: Document): Vector {
-        return Vector.from(other.vocabulary.map(this.getFrequency));
-    }
-
-    /**
      * Process the vocabulary of the document and return a mapping of those terms to their frequency.
      */
     private processVocabulary(): WordMapping {
         const vocabularyMatrix = new Map<string, WordMappingData>();
 
-        this._content.split(/\s+/)
-        .map(String.toLowerCase)
-        .forEach((word, index) => {
+        this._content
+        .match(/(\w+([^ ]\w+)?)/g)  // Match all words in the document (ignoring punctuation and whitespace).
+        ?.forEach((word, index) => {
                 
                 // Get the word mapping data for the word, creating it if it doesn't exist.
                 const wordData = vocabularyMatrix.get(word.toLowerCase()) ?? { frequency: 0, positions: new Set() };
@@ -79,7 +80,7 @@ export class Document {
                 wordData.positions.add(index);
     
                 // Update the word mapping.
-                vocabularyMatrix.set(word, wordData);
+                vocabularyMatrix.set(word.toLowerCase(), wordData);
         });
 
         return vocabularyMatrix;

@@ -7,23 +7,13 @@ import { LateInit } from "../util/LateInit";
  */
 export class Vector {
 
-    public values: number[] = new Proxy([], {
-        set: (target: number[], prop, value) => {
-
-            if (typeof prop !== 'number') throw new Error('Invalid index.');
-
-            target[prop] = value;
-
-            this._magnitude.markDirty() // Mark magnitude as dirty when values are modified.
-
-            return true;
-        }
-    });
-
     private _magnitude: LateInit<number> = new LateInit(() => Vector.processMagnitude(this));
 
-    constructor(values: number[] = []) {
-        this.values = values;
+    constructor(public values: number[] = []) { }
+
+    public set(index: number, value: number): void {
+        this.values[index] = value;
+        this._magnitude.markDirty() // Mark magnitude as dirty when values are modified.
     }
 
     public get(index: number): number {
@@ -31,11 +21,12 @@ export class Vector {
     }
 
     public cosineSimilarity(other: Vector): number {
+        if (this.magnitude === 0 || other.magnitude === 0) return 0; // Prevent division by zero (NaN).
         return this.dot(other) / (this.magnitude * other.magnitude);
     }
 
     public dot(other: Vector): number {
-        return this.values.reduce((acc, val, i) => acc + val * other.values[i], 0);
+        return this.values.map((val, i) => val * other.values[i]).reduce((acc, val) => acc + val, 0);
     }
 
     public get magnitude(): number {
@@ -47,7 +38,7 @@ export class Vector {
     }
 
     private static processMagnitude(vec: Vector): number {
-        return Math.sqrt(vec.values.reduce((acc, val) => acc + val * val, 0));
+        return Math.sqrt(vec.values.reduce((acc, val) => acc + Math.pow(val, 2), 0));
     }
 
     public static fill(length: number, value: number = 0): Vector {
