@@ -1,8 +1,9 @@
 from collection import Collection
 
-order = 1
 file_paths = [f'./files/{i}.txt' for i in range(2)]
-collection = Collection(file_paths, 0.5, order)
+order = 3
+weights = [0.2, 0.3, 0.5]
+collection = Collection(file_paths, 0.5, order, weights)
 
 def print_probabilities(probabilities):
     for document, probability in probabilities.items():
