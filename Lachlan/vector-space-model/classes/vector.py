@@ -11,7 +11,8 @@ class Vector:
     def get_length(self) -> int:
         return len(self.components)
 
-    def set_component(self, index: int, value: Union[int, float]) -> None:
+    # def set_component(self, index: int, value: Union[int, float]) -> None:
+    def set_component(self, index: int, value: float) -> None:
         self.components[index] = value
 
     def euclidean_length(self) -> float:

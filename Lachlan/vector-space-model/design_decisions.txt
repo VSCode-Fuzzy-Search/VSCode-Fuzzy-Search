@@ -1,3 +1,7 @@
 1. get_unit_vector as a method in tf-weighting.py instead of a class method in vector.py
     - using type hinting showed that having a method in the Vector class return a Vector type requires forward
         referencing which is a code smell.
+
+TODO:
+ - check if value parameter from set_component method, can just be of type float, and not Union[int, float]
+    - was int when tf was just a count of number of word frequency, but now a proportion so might be able to just be float
