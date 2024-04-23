@@ -1,6 +1,3 @@
-from typing import Union
-
-
 class Vector:
     def __init__(self, num_rows: int) -> None:
         self.components = [0]*num_rows
@@ -11,7 +8,6 @@ class Vector:
     def get_length(self) -> int:
         return len(self.components)
 
-    # def set_component(self, index: int, value: Union[int, float]) -> None:
     def set_component(self, index: int, value: float) -> None:
         self.components[index] = value
 

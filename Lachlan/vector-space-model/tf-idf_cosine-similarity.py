@@ -101,70 +101,70 @@ def cosine_similarity(v1: Vector, v2: Vector) -> float:
 
 
 if __name__ == "__main__":
-    # d1 = "the best Italian restaurant enjoy the best pasta"
-    # d2 = "American restaurant enjoy the best hamburger"
-    # d3 = "Korean restaurant enjoy the best bibimbap"
-    # d4 = "the best the best American restaurant"
+    d1 = "the best Italian restaurant enjoy the best pasta"
+    d2 = "American restaurant enjoy the best hamburger"
+    d3 = "Korean restaurant enjoy the best bibimbap"
+    d4 = "the best the best American restaurant"
 
-    # corpus = [d1, d2, d3, d4]
+    corpus = [d1, d2, d3, d4]
 
-    # document_vectors = create_vector_list()
-
-    # query = "american"
-    # tf_query, running_words = tf(query)
-    # document_vectors.append(tf_query)
-
-    # for document in corpus:
-    #     tf_document, running_words = tf(document, running_words)
-    #     document_vectors.append(tf_document)
-
-    # total_num_words = document_vectors[len(document_vectors) - 1].get_length()
-
-    # for vector in document_vectors:
-    #     if vector.get_length() < total_num_words:
-    #         vector.add_zeros(total_num_words)
-
-    # idf_vector = idf(document_vectors)
-
-    # tf_idf_vectors = create_vector_list()
-
-    # for vector in document_vectors:
-    #     tf_idf_vectors.append(tf_idf(vector, idf_vector))
-
-    # for vector in tf_idf_vectors:
-    #     print(cosine_similarity(tf_idf_vectors[0], vector))
-
-    files = ["txt_files/houn.txt",
-             "txt_files/sign.txt",
-             "txt_files/stud.txt",
-             "txt_files/vall.txt"]
-    
     document_vectors = create_vector_list()
-    
-    # hound
-    # winter
-    # hound winter
-    query = "hound"
+
+    query = "american"
     tf_query, running_words = tf(query)
     document_vectors.append(tf_query)
-    
-    for file in files:
-        tf_document, running_words = tf(file, running_words)
+
+    for document in corpus:
+        tf_document, running_words = tf(document, running_words)
         document_vectors.append(tf_document)
-    
+
     total_num_words = document_vectors[len(document_vectors) - 1].get_length()
-    
+
     for vector in document_vectors:
         if vector.get_length() < total_num_words:
             vector.add_zeros(total_num_words)
-    
+
     idf_vector = idf(document_vectors)
-    
+
     tf_idf_vectors = create_vector_list()
-    
+
     for vector in document_vectors:
         tf_idf_vectors.append(tf_idf(vector, idf_vector))
-    
+
     for vector in tf_idf_vectors:
         print(cosine_similarity(tf_idf_vectors[0], vector))
+
+    # files = ["txt_files/houn.txt",
+    #          "txt_files/sign.txt",
+    #          "txt_files/stud.txt",
+    #          "txt_files/vall.txt"]
+    
+    # document_vectors = create_vector_list()
+    
+    # # hound
+    # # winter
+    # # hound winter
+    # query = "hound"
+    # tf_query, running_words = tf(query)
+    # document_vectors.append(tf_query)
+    
+    # for file in files:
+    #     tf_document, running_words = tf(file, running_words)
+    #     document_vectors.append(tf_document)
+    
+    # total_num_words = document_vectors[len(document_vectors) - 1].get_length()
+    
+    # for vector in document_vectors:
+    #     if vector.get_length() < total_num_words:
+    #         vector.add_zeros(total_num_words)
+    
+    # idf_vector = idf(document_vectors)
+    
+    # tf_idf_vectors = create_vector_list()
+    
+    # for vector in document_vectors:
+    #     tf_idf_vectors.append(tf_idf(vector, idf_vector))
+    
+    # for vector in tf_idf_vectors:
+    #     print(cosine_similarity(tf_idf_vectors[0], vector))
 
