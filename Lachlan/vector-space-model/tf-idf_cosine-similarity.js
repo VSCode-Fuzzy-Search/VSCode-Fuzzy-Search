@@ -96,6 +96,33 @@ function dot_product(v1, v2) {
 function cosine_similarity(v1, v2) {
     return dot_product(get_unit_vector(v1), get_unit_vector(v2));
 }
+function main(corpus, query) {
+    var document_vectors = [];
+    var _a = tf(query), tf_query = _a[0], running_words = _a[1];
+    document_vectors.push(tf_query);
+    corpus.forEach(function (document) {
+        var _a;
+        var tf_document;
+        _a = tf(document, running_words), tf_document = _a[0], running_words = _a[1];
+        document_vectors.push(tf_document);
+    });
+    var total_num_words = document_vectors[document_vectors.length - 1].get_length();
+    document_vectors.forEach(function (vector) {
+        if (vector.get_length() < total_num_words) {
+            vector.add_zeros(total_num_words);
+        }
+    });
+    var idf_vector = idf(document_vectors);
+    var tf_idf_vectors = [];
+    document_vectors.forEach(function (vector) {
+        tf_idf_vectors.push(tf_idf(vector, idf_vector));
+    });
+    var output = [];
+    tf_idf_vectors.forEach(function (vector) {
+        output.push(cosine_similarity(tf_idf_vectors[0], vector));
+    });
+    return output;
+}
 debugger;
 var d1 = "the best Italian restaurant enjoy the best pasta";
 var d2 = "American restaurant enjoy the best hamburger";
@@ -104,25 +131,25 @@ var d4 = "the best the best American restaurant";
 var corpus = [d1, d2, d3, d4];
 var document_vectors = [];
 var query = "american";
-var _a = tf(query), tf_query = _a[0], running_words = _a[1];
-document_vectors.push(tf_query);
-corpus.forEach(function (document) {
-    var _a;
-    var tf_document;
-    _a = tf(document, running_words), tf_document = _a[0], running_words = _a[1];
-    document_vectors.push(tf_document);
-});
-var total_num_words = document_vectors[document_vectors.length - 1].get_length();
-document_vectors.forEach(function (vector) {
-    if (vector.get_length() < total_num_words) {
-        vector.add_zeros(total_num_words);
-    }
-});
-var idf_vector = idf(document_vectors);
-var tf_idf_vectors = [];
-document_vectors.forEach(function (vector) {
-    tf_idf_vectors.push(tf_idf(vector, idf_vector));
-});
-tf_idf_vectors.forEach(function (vector) {
-    console.log(cosine_similarity(tf_idf_vectors[0], vector));
-});
+console.log(main(corpus, query));
+// let [tf_query, running_words] = tf(query);
+// document_vectors.push(tf_query);
+// corpus.forEach( (document) => {
+//     let tf_document: Vector;
+//     [tf_document, running_words] = tf(document, running_words);
+//     document_vectors.push(tf_document);
+// });
+// let total_num_words = document_vectors[document_vectors.length - 1].get_length();
+// document_vectors.forEach( (vector) => {
+//     if (vector.get_length() < total_num_words) {
+//         vector.add_zeros(total_num_words);
+//     }
+// });
+// let idf_vector = idf(document_vectors);
+// let tf_idf_vectors: Vector[] = [];
+// document_vectors.forEach( (vector) => {
+//     tf_idf_vectors.push(tf_idf(vector, idf_vector));
+// });
+// tf_idf_vectors.forEach( (vector) => {
+//     console.log(cosine_similarity(tf_idf_vectors[0], vector));
+// });

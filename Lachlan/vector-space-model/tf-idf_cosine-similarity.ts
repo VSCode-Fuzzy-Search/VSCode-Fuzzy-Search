@@ -134,6 +134,45 @@ function dot_product(v1: Vector, v2: Vector): number {
 
  }
 
+ function main(corpus: string[], query: string): number[] {
+
+    let document_vectors: Vector[] = [];
+
+    let [tf_query, running_words] = tf(query);
+    document_vectors.push(tf_query);
+    
+    corpus.forEach( (document) => {
+        let tf_document: Vector;
+        [tf_document, running_words] = tf(document, running_words);
+        document_vectors.push(tf_document);
+    });
+    
+    let total_num_words = document_vectors[document_vectors.length - 1].get_length();
+    
+    document_vectors.forEach( (vector) => {
+        if (vector.get_length() < total_num_words) {
+            vector.add_zeros(total_num_words);
+        }
+    });
+    
+    let idf_vector = idf(document_vectors);
+    
+    let tf_idf_vectors: Vector[] = [];
+    
+    document_vectors.forEach( (vector) => {
+        tf_idf_vectors.push(tf_idf(vector, idf_vector));
+    });
+
+    let output: number[] = []
+    
+    tf_idf_vectors.forEach( (vector) => {
+        output.push(cosine_similarity(tf_idf_vectors[0], vector));
+    });
+
+    return output;
+
+ }
+
 debugger;
 const d1 = "the best Italian restaurant enjoy the best pasta";
 const d2 = "American restaurant enjoy the best hamburger";
@@ -145,31 +184,34 @@ const corpus = [d1, d2, d3, d4];
 let document_vectors: Vector[] = [];
 
 const query = "american";
-let [tf_query, running_words] = tf(query);
-document_vectors.push(tf_query);
 
-corpus.forEach( (document) => {
-    let tf_document: Vector;
-    [tf_document, running_words] = tf(document, running_words);
-    document_vectors.push(tf_document);
-});
+console.log(main(corpus, query));
 
-let total_num_words = document_vectors[document_vectors.length - 1].get_length();
+// let [tf_query, running_words] = tf(query);
+// document_vectors.push(tf_query);
 
-document_vectors.forEach( (vector) => {
-    if (vector.get_length() < total_num_words) {
-        vector.add_zeros(total_num_words);
-    }
-});
+// corpus.forEach( (document) => {
+//     let tf_document: Vector;
+//     [tf_document, running_words] = tf(document, running_words);
+//     document_vectors.push(tf_document);
+// });
 
-let idf_vector = idf(document_vectors);
+// let total_num_words = document_vectors[document_vectors.length - 1].get_length();
 
-let tf_idf_vectors: Vector[] = [];
+// document_vectors.forEach( (vector) => {
+//     if (vector.get_length() < total_num_words) {
+//         vector.add_zeros(total_num_words);
+//     }
+// });
 
-document_vectors.forEach( (vector) => {
-    tf_idf_vectors.push(tf_idf(vector, idf_vector));
-});
+// let idf_vector = idf(document_vectors);
 
-tf_idf_vectors.forEach( (vector) => {
-    console.log(cosine_similarity(tf_idf_vectors[0], vector));
-});
+// let tf_idf_vectors: Vector[] = [];
+
+// document_vectors.forEach( (vector) => {
+//     tf_idf_vectors.push(tf_idf(vector, idf_vector));
+// });
+
+// tf_idf_vectors.forEach( (vector) => {
+//     console.log(cosine_similarity(tf_idf_vectors[0], vector));
+// });
