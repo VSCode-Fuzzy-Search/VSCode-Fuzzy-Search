@@ -86,7 +86,7 @@ export class LeftPanelWebview implements WebviewViewProvider {
                     ${
                         
                         ReactDOMServer.renderToString((
-							<LeftPanel message={"Tutorial for Left Panel Webview in VSCode extension"}></LeftPanel>
+							<LeftPanel message={"Leftview Panel Title"}></LeftPanel>
 						))
                     }
 					<script nonce="${nonce}" type="text/javascript" src="${constantUri}"></script>
