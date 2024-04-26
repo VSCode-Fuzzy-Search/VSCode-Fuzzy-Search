@@ -6,17 +6,18 @@ import { TempBool } from "./algorithm/booleanRetrieval/TempBool";
 class QueryHandler {
 
     indexs: { [algo: number]: unknown} = {}
+    path: string
 
-    QueryHandler(){
+    constructor(path: string){
 
         let documents
         // if(vscode.workspace.workspaceFolders !== undefined) {
 
             // let path = vscode.workspace.workspaceFolders[0].uri.path.substring(1);
 
-            let path = "C:\\Users\\james\\OneDrive\\Documents\\Monash 2024 Semester 1\\FIT4002\\Repo\\VSCode-Fuzzy-Search\\James\\extension\\fuzzysearch"
+        this.path = path;
 
-		    documents = fs.readdirSync(path);
+		documents = fs.readdirSync(path);
 
         // }
 
@@ -30,13 +31,11 @@ class QueryHandler {
 
             // let path = vscode.workspace.workspaceFolders[0].uri.path.substring(1);
 
-            let path = "C:\\Users\\james\\OneDrive\\Documents\\Monash 2024 Semester 1\\FIT4002\\Repo\\VSCode-Fuzzy-Search\\James\\extension\\fuzzysearch"
-
             let booleanRetrieval = new TempBool()
 
             if (this.indexs[algorithm] == undefined){
                 console.log("Making New Index")
-                this.indexs[algorithm] = booleanRetrieval.createIndex(path);
+                this.indexs[algorithm] = booleanRetrieval.createIndex(this.path);
 
             }
 

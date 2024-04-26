@@ -1,8 +1,7 @@
 import { RetrievalAlgorithm } from "../RetrievalAlgorithm";
-import * as fs from 'fs';
 
 
-class TempBool implements RetrievalAlgorithm {
+class TempBool extends RetrievalAlgorithm {
 
     processQuery(query: string, index: unknown): { file: string; related: number; }[] {
 
@@ -39,8 +38,8 @@ class TempBool implements RetrievalAlgorithm {
 
     createIndex(path: string): unknown {
 
-        let documents = fs.readdirSync(path);
-        //console.log(documents)
+        let words = this.getDocuments(path);
+        console.log(words)
 
         return { "Hello": ["Doc 1", "Doc 2", "Doc 3"],
             "Bye": ["Doc 2", "Doc 3"],
