@@ -5,10 +5,6 @@ function damerau_levenshtein(str1: string, str2: string): number {
     const ALPHABET_LENGTH = 26;
     let da: number[] = new Array(ALPHABET_LENGTH).fill(0);
 
-    const test = "a";
-    test.charCodeAt(0)
-    // - 97
-
     str1 = "  " + str1;
     str2 = "  " + str2;
 
