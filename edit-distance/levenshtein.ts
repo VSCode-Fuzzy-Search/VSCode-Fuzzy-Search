@@ -1,5 +1,3 @@
-import * as fs from 'fs';
-
 /**
  * Returns the edit distance between two strings using the Levenhstein algorithm
  * 
@@ -7,7 +5,7 @@ import * as fs from 'fs';
  * @param str2 - the second string
  * @returns the bottom right element from the calculated table
  */
-function levenshtein_edit_distance(str1: string, str2: string): number {
+export function levenshtein(str1: string, str2: string): number {
 
     str1 = " " + str1;
     str2 = " " + str2;
@@ -40,41 +38,3 @@ function levenshtein_edit_distance(str1: string, str2: string): number {
     return table[str2.length - 1][str1.length - 1];
 
 }
-
-/**
- * Returns the 10 closest edit-distance strings from a word list to a query
- * 
- * @param query - the string to be compared against word_list
- * @param word_list - list of words
- * @returns a list of strings
- */
-function find_closest(query: string, word_list: string[]): string[] {
-
-    const num_results = 10;
-
-    const distances = word_list.map(word => ({
-        word,
-        distance: levenshtein_edit_distance(query, word)
-    }));
-
-    distances.sort((a, b) => a.distance - b.distance);
-
-    return distances.slice(0, num_results).map(item => `${item.word} (edit distance = ${item.distance})`);
-
-}
-
-function main() {
-
-    const word_list: string[] = fs.readFileSync('wordlist-10000.txt', 'utf-8').split('\n').map(word => word.trim());
-
-    const query = 'absetn';
-    const closestWords = find_closest(query, word_list);
-
-    console.log(`Closest words to ${query}:`);
-    for (let i = 0; i < closestWords.length; i++) {
-        console.log(closestWords[i]);
-    }
-    
-}
-
-main();
