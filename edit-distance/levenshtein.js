@@ -53,7 +53,7 @@ function find_closest(query, word_list) {
 }
 function main() {
     var word_list = fs.readFileSync('wordlist-10000.txt', 'utf-8').split('\n').map(function (word) { return word.trim(); });
-    var query = 'afrre';
+    var query = 'absetn';
     var closestWords = find_closest(query, word_list);
     console.log("Closest words to ".concat(query, ":"));
     for (var i = 0; i < closestWords.length; i++) {

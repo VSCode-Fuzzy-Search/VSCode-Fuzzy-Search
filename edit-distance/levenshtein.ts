@@ -67,7 +67,7 @@ function main() {
 
     const word_list: string[] = fs.readFileSync('wordlist-10000.txt', 'utf-8').split('\n').map(word => word.trim());
 
-    const query = 'afrre';
+    const query = 'absetn';
     const closestWords = find_closest(query, word_list);
 
     console.log(`Closest words to ${query}:`);

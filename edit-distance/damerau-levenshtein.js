@@ -59,13 +59,13 @@ function find_closest(query, word_list) {
     return distances.slice(0, num_results).map(function (item) { return "".concat(item.word, " (edit distance = ").concat(item.distance, ")"); });
 }
 function main() {
-    console.log(damerau_levenshtein("abcd", "adcb"));
-    // var word_list = fs.readFileSync('wordlist-10000.txt', 'utf-8').split('\n').map(function (word) { return word.trim(); });
-    // var query = 'absetn';
-    // var closestWords = find_closest(query, word_list);
-    // console.log("Closest words to ".concat(query, ":"));
-    // for (var i = 0; i < closestWords.length; i++) {
-    //     console.log(closestWords[i]);
-    // }
+    // console.log(damerau_levenshtein("abcd", "acbd"));
+    var word_list = fs.readFileSync('wordlist-10000.txt', 'utf-8').split('\n').map(function (word) { return word.trim(); });
+    var query = 'absetn';
+    var closestWords = find_closest(query, word_list);
+    console.log("Closest words to ".concat(query, ":"));
+    for (var i = 0; i < closestWords.length; i++) {
+        console.log(closestWords[i]);
+    }
 }
 main();

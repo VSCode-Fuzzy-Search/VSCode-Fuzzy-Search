@@ -6,6 +6,11 @@
  * @returns - list of indexes
  */
 function naive_search(pattern: string, text: string): number[] {
+    /*
+    Worst case time complexity = O(m(n-m+1))
+        m = pattern length
+        n = text length
+    */
 
     let output: number[] = [];
 
