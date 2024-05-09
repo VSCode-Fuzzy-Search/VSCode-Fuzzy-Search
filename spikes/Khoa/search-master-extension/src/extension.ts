@@ -1,5 +1,4 @@
 import { commands, ExtensionContext, window } from 'vscode';
-import { registerIntelligence } from './extension/features/codeCompletion/register-intelligence';
 import { registerCacheCommand } from './extension/features/cache-operation';
 import { registerCallbackRequest } from './extension/features/register-callback-request';
 import { registerDevToolCommand } from './extension/features/register-dev-tool';
@@ -15,7 +14,6 @@ export function activate(context: ExtensionContext) {
 	registerDevToolCommand(context);
 	registerCallbackRequest(context);
 	registerCenterPanel(context);
-	registerIntelligence(context);
 	commands.executeCommand('setContext', 'isPrintContextMenu', true);
 }
 
