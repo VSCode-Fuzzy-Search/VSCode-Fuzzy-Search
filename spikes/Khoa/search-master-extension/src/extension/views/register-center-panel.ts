@@ -54,19 +54,9 @@ export class CenterPanel {
 
         this.webviewPanel.webview.onDidReceiveMessage((data) => {
             switch (data.type) {
-                case "btn-first": {
+                case 'btn-first': {
                     this.extensionContext.globalState.update('searchmasterCacheKey', data.value);
                     window.showInformationMessage('Value saved in cache: ' + data.value);
-                    break;
-                }
-                case 'btn-second': {
-                    this.extensionContext.globalState.update('searchmasterCacheKey', data.value);
-                    window.showInformationMessage('Value saved in cache: ' + data.value);
-                    break;
-                }
-                case 'btn-third': {
-                    this.extensionContext.secrets.store('searchmasterCacheKey', data.value);
-                    window.showInformationMessage('Value saved in SecretStorage: ' + data.value);
                     break;
                 }
             }
@@ -75,7 +65,7 @@ export class CenterPanel {
 
     private _getHtmlForWebview(webview: Webview) {
         const styleResetUri = webview.asWebviewUri(Uri.joinPath(this._extensionUri, "media", "css", "reset.css"));
-        const scriptUri = webview.asWebviewUri(Uri.joinPath(this._extensionUri, "media", "js", "infinite-poc-panel.js"));
+        const scriptUri = webview.asWebviewUri(Uri.joinPath(this._extensionUri, "media", "js", "search-master-panel.js"));
         const styleVSCodeUri = webview.asWebviewUri(Uri.joinPath(this._extensionUri, "media", "css", "vscode.css"));
 
         const nonce = getNonce();
@@ -99,11 +89,9 @@ export class CenterPanel {
               <script nonce="${nonce}"></script>
            </head>
            <body>
-              <div>Action buttons:</div>
-              <button type="button" class="btn-first">Open Browser</button><br>
+              <div>Enter your boolean query:</div>
               <input type="text" class="txt-box" id="searchmastervalueid" name="searchmastervaluename"><br>
-              <button type="button" class="btn-second">save in cache</button><br>
-              <button type="button" class="btn-third">save in secret storage</button><br>
+              <button type="button" class="btn-first">Search !</button><br>
               <script nonce="${nonce}" src="${scriptUri}"></script>
            </body>
         </html>`;

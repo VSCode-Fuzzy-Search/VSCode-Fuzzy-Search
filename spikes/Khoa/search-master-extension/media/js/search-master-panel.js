@@ -30,7 +30,7 @@
     function firstBtnClicked() {
         vscode.postMessage({
             type: 'btn-first',
-            value: 'btn-first clicked'
+            value: txtbox.value
         });
     }
 
@@ -51,7 +51,7 @@
     function fourthBtnClicked() {
         vscode.postMessage({
             type: 'btn-fourth',
-            value: 'btn-fourth clicked'
+            value: txtbox.value
         });
     }
 

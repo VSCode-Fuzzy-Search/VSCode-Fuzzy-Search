@@ -1,4 +1,4 @@
-import { CancellationToken, commands, ExtensionContext, OutputChannel, ProgressLocation, Uri, Webview, WebviewView, WebviewViewProvider, WebviewViewResolveContext, window, workspace } from "vscode";
+import { CancellationToken, commands, ExtensionContext, OutputChannel, Uri, Webview, WebviewView, WebviewViewProvider, WebviewViewResolveContext, window } from "vscode";
 import { getNonce } from "../util";
 import { CenterPanel } from "./register-center-panel";
 
@@ -47,9 +47,8 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
 
         webviewView.webview.onDidReceiveMessage(async (data) => {
             switch (data.type) {
-                case "btn-first": {
-                    this.extensionContext.globalState.update('searchmasterCacheKey', data.value);
-                    window.showInformationMessage('Value saved in cache: ' + data.value);
+                case 'btn-first': {
+                    CenterPanel.getInstance(this.extensionContext.extensionUri, this.extensionContext);
                     break;
                 }
                 case 'btn-second': {
@@ -62,8 +61,9 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
                     window.showInformationMessage('Value saved in SecretStorage: ' + data.value);
                     break;
                 }
-                case "btn-fourth": {
-                    CenterPanel.getInstance(this.extensionContext.extensionUri, this.extensionContext);
+                case 'btn-fourth': {
+                    this.extensionContext.workspaceState.update('searchmasterCacheKey', data.value);
+                    window.showInformationMessage('Value saved in cache: ' + data.value);
                     break;
                 }
             }
@@ -72,7 +72,7 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
 
     private _getHtmlForWebview(webview: Webview) {
         const styleResetUri = webview.asWebviewUri(Uri.joinPath(this._extensionUri, "media", "css", "reset.css"));
-        const scriptUri = webview.asWebviewUri(Uri.joinPath(this._extensionUri, "media", "js", "infinite-poc-panel.js"));
+        const scriptUri = webview.asWebviewUri(Uri.joinPath(this._extensionUri, "media", "js", "search-master-panel.js"));
         const styleVSCodeUri = webview.asWebviewUri(Uri.joinPath(this._extensionUri, "media", "css", "vscode.css"));
 
         const nonce = getNonce();
