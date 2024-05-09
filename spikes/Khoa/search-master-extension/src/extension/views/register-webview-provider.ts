@@ -1,6 +1,5 @@
 import { CancellationToken, commands, ExtensionContext, OutputChannel, ProgressLocation, Uri, Webview, WebviewView, WebviewViewProvider, WebviewViewResolveContext, window, workspace } from "vscode";
 import { openBrowser } from "../features/register-callback-request";
-// import { readSelectedOrAllText } from "../features/register-commands";
 import { getNonce } from "../util";
 import { CustomEvent } from "./custom-event";
 import { CenterPanel } from "./register-center-panel";
@@ -158,12 +157,13 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
               <script nonce="${nonce}"></script>
            </head>
            <body>
-              <div>Action buttons:</div>
-              <button type="button" class="btn-first">Open Browser</button><br>
+              <div>Search Engines</div>
+              <div>Input: </div>
               <input type="text" class="txt-box" id="searchmastervalueid" name="searchmastervaluename"><br>
-              <button type="button" class="btn-second">save in cache</button><br>
-              <button type="button" class="btn-third">save in secret storage</button><br>
-              <button type="button" class="btn-fourth">Open Center Panel</button><br>
+              <button type="button" class="btn-first">Boolean Retrieval</button><br>
+              <button type="button" class="btn-second">Vector Space Model</button><br>
+              <button type="button" class="btn-third">Language Model</button><br>
+              <button type="button" class="btn-fourth">Fuzzy search</button><br>
               <button type="button" class="btn-fifth">Send data via command</button><br>
               <button type="button" class="btn-eightth">Open folder</button><br>
               <button type="button" class="btn-sixth">Create temp document</button><br>
