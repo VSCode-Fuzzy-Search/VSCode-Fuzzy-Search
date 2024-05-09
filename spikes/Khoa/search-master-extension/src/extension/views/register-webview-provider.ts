@@ -23,7 +23,7 @@ export function readSelectedOrAllText(op: OutputChannel) {
 
 export function registerWebViewProvider(context: ExtensionContext, op: OutputChannel) {
     const provider = new SidebarWebViewProvider(context.extensionUri, context);
-    context.subscriptions.push(window.registerWebviewViewProvider('infinite-poc-sidebar-panel', provider));
+    context.subscriptions.push(window.registerWebviewViewProvider('search-master-sidebar-panel', provider));
 
     context.subscriptions.push(commands.registerCommand('searchmaster.print.editor.menu', () => {
         const txt = readSelectedOrAllText(op);

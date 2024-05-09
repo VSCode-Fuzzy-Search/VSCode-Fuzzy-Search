@@ -30,17 +30,17 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "infinite-poc-view",
+          "id": "Search-master",
           "title": "Infinite POC",
           "icon": "media/icons/infinity-svgrepo-com.svg"
         }
       ]
     },
     "views": {
-      "infinite-poc-view": [
+      "Search-master": [
         {
           "type": "webview",
-          "id": "infinite-poc-sidebar-panel",
+          "id": "search-master-sidebar-panel",
           "name": "Infinite POC",
           "icon": "media/icons/beaker.svg"
         }
