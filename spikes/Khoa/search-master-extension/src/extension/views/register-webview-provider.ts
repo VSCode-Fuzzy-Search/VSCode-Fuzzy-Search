@@ -1,9 +1,25 @@
 import { CancellationToken, commands, ExtensionContext, OutputChannel, ProgressLocation, Uri, Webview, WebviewView, WebviewViewProvider, WebviewViewResolveContext, window, workspace } from "vscode";
 import { openBrowser } from "../features/register-callback-request";
-import { readSelectedOrAllText } from "../features/register-commands";
+// import { readSelectedOrAllText } from "../features/register-commands";
 import { getNonce } from "../util";
 import { CustomEvent } from "./custom-event";
 import { CenterPanel } from "./register-center-panel";
+
+export function readSelectedOrAllText(op: OutputChannel) {
+    op.clear();
+    const { activeTextEditor } = window;
+    let txt = '';
+    if (!activeTextEditor || activeTextEditor.document.languageId !== 'javascript') {
+        op.appendLine('no active found');
+    } else {
+
+        txt = activeTextEditor.document.getText(activeTextEditor.selection);
+        if (!txt) txt = activeTextEditor.document.getText();
+        op.appendLine(txt);
+    }
+    op.show();
+    return txt;
+}
 
 export function registerWebViewProvider(context: ExtensionContext, op: OutputChannel) {
     const provider = new SidebarWebViewProvider(context.extensionUri, context);
