@@ -1,5 +1,4 @@
 import { CancellationToken, commands, ExtensionContext, OutputChannel, ProgressLocation, Uri, Webview, WebviewView, WebviewViewProvider, WebviewViewResolveContext, window, workspace } from "vscode";
-import { openBrowser } from "../features/register-callback-request";
 import { getNonce } from "../util";
 import { CenterPanel } from "./register-center-panel";
 
@@ -49,7 +48,8 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
         webviewView.webview.onDidReceiveMessage(async (data) => {
             switch (data.type) {
                 case "btn-first": {
-                    openBrowser();
+                    this.extensionContext.globalState.update('searchmasterCacheKey', data.value);
+                    window.showInformationMessage('Value saved in cache: ' + data.value);
                     break;
                 }
                 case 'btn-second': {

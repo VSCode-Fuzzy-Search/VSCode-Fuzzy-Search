@@ -1,5 +1,4 @@
 import { commands, ExtensionContext, Uri, ViewColumn, Webview, WebviewPanel, window } from "vscode";
-import { openBrowser } from "../features/register-callback-request";
 import { getNonce } from "../util";
 
 export function registerCenterPanel(context: ExtensionContext) {
@@ -56,7 +55,8 @@ export class CenterPanel {
         this.webviewPanel.webview.onDidReceiveMessage((data) => {
             switch (data.type) {
                 case "btn-first": {
-                    openBrowser();
+                    this.extensionContext.globalState.update('searchmasterCacheKey', data.value);
+                    window.showInformationMessage('Value saved in cache: ' + data.value);
                     break;
                 }
                 case 'btn-second': {

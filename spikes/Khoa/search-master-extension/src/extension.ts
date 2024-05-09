@@ -1,7 +1,5 @@
 import { commands, ExtensionContext, window } from 'vscode';
 import { registerCacheCommand } from './extension/features/cache-operation';
-import { registerCallbackRequest } from './extension/features/register-callback-request';
-import { registerDevToolCommand } from './extension/features/register-dev-tool';
 import { registerWelcomeMessage } from './extension/features/register-welcome-message';
 import { registerCenterPanel } from './extension/views/register-center-panel';
 import { registerWebViewProvider } from "./extension/views/register-webview-provider";
@@ -11,8 +9,6 @@ export function activate(context: ExtensionContext) {
 	registerCacheCommand(context);
 	registerWelcomeMessage(context);
 	registerWebViewProvider(context, op);
-	registerDevToolCommand(context);
-	registerCallbackRequest(context);
 	registerCenterPanel(context);
 	commands.executeCommand('setContext', 'isPrintContextMenu', true);
 }
