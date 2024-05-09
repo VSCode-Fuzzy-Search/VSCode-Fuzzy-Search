@@ -13,7 +13,7 @@ export function registerCommands(context: ExtensionContext, op: OutputChannel) {
             .then(result => processUserSelection(result));
     }));
 
-    context.subscriptions.push(commands.registerCommand('ipoc.print.explorer.menu', () => {
+    context.subscriptions.push(commands.registerCommand('searchmaster.print.explorer.menu', () => {
         readSelectedOrAllText(op);
     }));
 }

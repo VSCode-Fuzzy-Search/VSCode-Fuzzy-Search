@@ -50,100 +50,100 @@
       {
         "command": "infinite-poc.dialog-modal-message",
         "title": "Show Dialog Modal Message",
-        "category": "ipoc"
+        "category": "searchmaster"
       },
       {
         "command": "infinite-poc.ask-user",
         "title": "Ask user a question?",
-        "category": "ipoc"
+        "category": "searchmaster"
       },
       {
-        "command": "ipoc.print.explorer.menu",
+        "command": "searchmaster.print.explorer.menu",
         "title": "Print text in output channel",
-        "category": "ipoc"
+        "category": "searchmaster"
       },
       {
-        "command": "ipoc.print.editor.menu",
+        "command": "searchmaster.print.editor.menu",
         "title": "Send & Print text in output channel",
-        "category": "ipoc"
+        "category": "searchmaster"
       },
       {
-        "command": "ipoc.show.cache",
+        "command": "searchmaster.show.cache",
         "title": "Show cache",
-        "category": "ipoc"
+        "category": "searchmaster"
       },
       {
-        "command": "ipoc.clear.cache",
+        "command": "searchmaster.clear.cache",
         "title": "Clear Cache",
-        "category": "ipoc"
+        "category": "searchmaster"
       },
       {
-        "command": "ipoc.show.secret.storage",
+        "command": "searchmaster.show.secret.storage",
         "title": "Show value from Secret Storage",
-        "category": "ipoc"
+        "category": "searchmaster"
       },
       {
-        "command": "ipoc.show.center.panel",
+        "command": "searchmaster.show.center.panel",
         "title": "Show center panel",
-        "category": "ipoc"
+        "category": "searchmaster"
       },
       {
-        "command": "ipoc.send.data",
+        "command": "searchmaster.send.data",
         "title": "transfer Data From Ts To Ui",
-        "category": "ipoc"
+        "category": "searchmaster"
       }
     ],
     "submenus": [
       {
-        "id": "ipoc.editor.menu",
-        "label": "IPOC from editor",
+        "id": "searchmaster.editor.menu",
+        "label": "searchmaster from editor",
         "icon": "$(code)"
       },
       {
-        "id": "ipoc.explorer.menu",
-        "label": "IPOC from explorer",
+        "id": "searchmaster.explorer.menu",
+        "label": "searchmaster from explorer",
         "icon": "$(code)"
       }
     ],
     "menus": {
       "commandPalette": [
         {
-          "command": "ipoc.print.explorer.menu",
+          "command": "searchmaster.print.explorer.menu",
           "when": "false"
         },
         {
-          "command": "ipoc.print.editor.menu",
+          "command": "searchmaster.print.editor.menu",
           "when": "false"
         },
         {
-          "command": "ipoc.send.data",
+          "command": "searchmaster.send.data",
           "when": "false"
         }
       ],
       "explorer/context": [
         {
-          "submenu": "ipoc.explorer.menu",
+          "submenu": "searchmaster.explorer.menu",
           "group": "navigation@1",
           "when": "resourceLangId == javascript"
         }
       ],
-      "ipoc.explorer.menu":[
+      "searchmaster.explorer.menu":[
         {
-          "command": "ipoc.print.explorer.menu",
+          "command": "searchmaster.print.explorer.menu",
           "group": "commands@1",
           "when": "resourceLangId == javascript"
         }
       ],
       "editor/context": [
         {
-          "submenu": "ipoc.editor.menu",
+          "submenu": "searchmaster.editor.menu",
           "group": "navigation@1",
           "when": "resourceLangId == javascript"
         }
       ],
-      "ipoc.editor.menu":[
+      "searchmaster.editor.menu":[
         {
-          "command": "ipoc.print.editor.menu",
+          "command": "searchmaster.print.editor.menu",
           "group": "commands@1",
           "when": "isPrintContextMenu && resourceLangId == javascript"
         }
@@ -152,23 +152,23 @@
     "configuration": {
         "title": "Infinite POC",
         "properties": {
-          "ipoc.welcom.message.enabled": {
+          "searchmaster.welcom.message.enabled": {
             "type": "boolean",
             "default": true,
             "description": "enable/disable welcome message"
           },
-          "ipoc.welcom.message.emoji": {
+          "searchmaster.welcom.message.emoji": {
             "type": "string",
             "enum": ["👋", "😄", "😎"],
             "default": "👋",
             "description": "select emoji"
         },
-        "ipoc.welcom.message.string": {
+        "searchmaster.welcom.message.string": {
           "type": "string",
           "description": "please enter welcome message",
-          "default": "Welcome to the ipoc extension!"
+          "default": "Welcome to the searchmaster extension!"
         },
-        "ipoc.open.browser.sites": {
+        "searchmaster.open.browser.sites": {
         "type": "array",
         "items": {
           "type": "string"

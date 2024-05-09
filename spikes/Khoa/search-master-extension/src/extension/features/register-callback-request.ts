@@ -25,6 +25,6 @@ export function registerCallbackRequest(context: ExtensionContext) {
 }
 
 export function openBrowser() {
-    const site = workspace.getConfiguration().get<string[]>('ipoc.open.browser.sites')
+    const site = workspace.getConfiguration().get<string[]>('searchmaster.open.browser.sites')
     commands.executeCommand("vscode.open", Uri.parse(site ? site[0] : `https://www.google.com`));
 }

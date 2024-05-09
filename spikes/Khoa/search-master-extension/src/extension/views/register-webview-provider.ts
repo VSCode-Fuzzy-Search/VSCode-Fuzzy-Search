@@ -9,7 +9,7 @@ export function registerWebViewProvider(context: ExtensionContext, op: OutputCha
     const provider = new SidebarWebViewProvider(context.extensionUri, context);
     context.subscriptions.push(window.registerWebviewViewProvider('infinite-poc-sidebar-panel', provider));
 
-    context.subscriptions.push(commands.registerCommand('ipoc.print.editor.menu', () => {
+    context.subscriptions.push(commands.registerCommand('searchmaster.print.editor.menu', () => {
         const txt = readSelectedOrAllText(op);
         provider.view?.webview.postMessage({ type: 'transferDataFromTsToUi', data: txt });
     }));
@@ -39,12 +39,12 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
                     break;
                 }
                 case 'btn-second': {
-                    this.extensionContext.globalState.update('ipocCacheKey', data.value);
+                    this.extensionContext.globalState.update('searchmasterCacheKey', data.value);
                     window.showInformationMessage('Value saved in cache: ' + data.value);
                     break;
                 }
                 case 'btn-third': {
-                    this.extensionContext.secrets.store('ipocCacheKey', data.value);
+                    this.extensionContext.secrets.store('searchmasterCacheKey', data.value);
                     window.showInformationMessage('Value saved in SecretStorage: ' + data.value);
                     break;
                 }
@@ -53,7 +53,7 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
                     break;
                 }
                 case "btn-fifth": {
-                    commands.executeCommand('ipoc.send.data', { type: 'ipoc.send.data.key', data: data.value });
+                    commands.executeCommand('searchmaster.send.data', { type: 'searchmaster.send.data.key', data: data.value });
                     break;
                 }
 
@@ -144,7 +144,7 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
            <body>
               <div>Action buttons:</div>
               <button type="button" class="btn-first">Open Browser</button><br>
-              <input type="text" class="txt-box" id="ipocvalueid" name="ipocvaluename"><br>
+              <input type="text" class="txt-box" id="searchmastervalueid" name="searchmastervaluename"><br>
               <button type="button" class="btn-second">save in cache</button><br>
               <button type="button" class="btn-third">save in secret storage</button><br>
               <button type="button" class="btn-fourth">Open Center Panel</button><br>

@@ -4,14 +4,14 @@ import { getNonce } from "../util";
 
 export function registerCenterPanel(context: ExtensionContext) {
     context.subscriptions.push(
-        commands.registerCommand('ipoc.show.center.panel', () => {
+        commands.registerCommand('searchmaster.show.center.panel', () => {
             CenterPanel.getInstance(context.extensionUri, context);
         })
     );
 
     context.subscriptions.push(
-        commands.registerCommand('ipoc.send.data', (data) => {
-            window.showInformationMessage('ipoc.send.data: ' + data.data);
+        commands.registerCommand('searchmaster.send.data', (data) => {
+            window.showInformationMessage('searchmaster.send.data: ' + data.data);
         })
     );
 }
@@ -60,12 +60,12 @@ export class CenterPanel {
                     break;
                 }
                 case 'btn-second': {
-                    this.extensionContext.globalState.update('ipocCacheKey', data.value);
+                    this.extensionContext.globalState.update('searchmasterCacheKey', data.value);
                     window.showInformationMessage('Value saved in cache: ' + data.value);
                     break;
                 }
                 case 'btn-third': {
-                    this.extensionContext.secrets.store('ipocCacheKey', data.value);
+                    this.extensionContext.secrets.store('searchmasterCacheKey', data.value);
                     window.showInformationMessage('Value saved in SecretStorage: ' + data.value);
                     break;
                 }
@@ -101,7 +101,7 @@ export class CenterPanel {
            <body>
               <div>Action buttons:</div>
               <button type="button" class="btn-first">Open Browser</button><br>
-              <input type="text" class="txt-box" id="ipocvalueid" name="ipocvaluename"><br>
+              <input type="text" class="txt-box" id="searchmastervalueid" name="searchmastervaluename"><br>
               <button type="button" class="btn-second">save in cache</button><br>
               <button type="button" class="btn-third">save in secret storage</button><br>
               <script nonce="${nonce}" src="${scriptUri}"></script>
