@@ -167,13 +167,6 @@
           "type": "string",
           "description": "please enter welcome message",
           "default": "Welcome to the searchmaster extension!"
-        },
-        "searchmaster.open.browser.sites": {
-        "type": "array",
-        "items": {
-          "type": "string"
-          },
-          "default":["https://www.youtube.com/c/InfinitePOC", "https://www.google.com/"]
         }
       }
     }

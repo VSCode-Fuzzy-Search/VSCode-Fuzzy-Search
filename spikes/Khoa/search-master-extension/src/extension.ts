@@ -5,7 +5,7 @@ import { registerCenterPanel } from './extension/views/register-center-panel';
 import { registerWebViewProvider } from "./extension/views/register-webview-provider";
 
 export function activate(context: ExtensionContext) {
-	const op = window.createOutputChannel('InfinitePOC');
+	const op = window.createOutputChannel('Search Master');
 	registerCacheCommand(context);
 	registerWelcomeMessage(context);
 	registerWebViewProvider(context, op);
