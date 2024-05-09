@@ -1,7 +1,6 @@
 import { CancellationToken, commands, ExtensionContext, OutputChannel, ProgressLocation, Uri, Webview, WebviewView, WebviewViewProvider, WebviewViewResolveContext, window, workspace } from "vscode";
 import { openBrowser } from "../features/register-callback-request";
 import { getNonce } from "../util";
-import { CustomEvent } from "./custom-event";
 import { CenterPanel } from "./register-center-panel";
 
 export function readSelectedOrAllText(op: OutputChannel) {
@@ -67,66 +66,6 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
                     CenterPanel.getInstance(this.extensionContext.extensionUri, this.extensionContext);
                     break;
                 }
-                case "btn-fifth": {
-                    commands.executeCommand('searchmaster.send.data', { type: 'searchmaster.send.data.key', data: data.value });
-                    break;
-                }
-
-                case "btn-sixth": {
-                    await workspace.openTextDocument({ language: 'javascript', content: '// start writting your script from here...' })
-                        .then(e => window.showTextDocument(e));
-                    break;
-                }
-                case "btn-seventh": {
-                    await window.showTextDocument(Uri.file(data.value));
-                    break;
-                }
-                case "btn-eightth": {
-                    await commands.executeCommand('vscode.openFolder', Uri.file(data.value));
-                    break;
-                }
-                case "btn-nineth": {
-                    const files = data.value.split(',');
-                    await commands.executeCommand('vscode.diff', Uri.file(files[0]), Uri.file(files[1]), 'Left <-> Right');
-                    break;
-                }
-                case "btn-tenth": {
-                    let isCancelled = false;
-                    window.withProgress({
-                        title: 'Progress example',
-                        location: ProgressLocation.Notification,
-                        cancellable: true
-                    }, async (progress, cancellationToken) => {
-                        cancellationToken.onCancellationRequested(() => {
-                            isCancelled = true;
-                        });
-                        const p = new Promise<void>(resolve => {
-                            progress.report({ increment: 0, message: 'started' });
-
-                            if (!isCancelled)
-                                setTimeout(() => {
-                                    progress.report({ increment: 50, message: 'completed 50%' });
-                                }, 1000);
-
-                            if (!isCancelled)
-                                setTimeout(() => {
-                                    progress.report({ increment: 75, message: 'completed 75%' });
-                                }, 3000);
-
-                            if (!isCancelled)
-                                setTimeout(() => {
-                                    progress.report({ increment: 100, message: 'completed 100%' });
-                                    resolve();
-                                }, 4000);
-                        });
-                        return p;
-                    });
-                    break;
-                }
-                case "btn-eleventh": {
-                    CustomEvent.customEvent.publish(data.value);
-                    break;
-                }
             }
         });
     }
@@ -164,13 +103,6 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
               <button type="button" class="btn-second">Vector Space Model</button><br>
               <button type="button" class="btn-third">Language Model</button><br>
               <button type="button" class="btn-fourth">Fuzzy search</button><br>
-              <button type="button" class="btn-fifth">Send data via command</button><br>
-              <button type="button" class="btn-eightth">Open folder</button><br>
-              <button type="button" class="btn-sixth">Create temp document</button><br>
-              <button type="button" class="btn-seventh">Open physical document</button><br>
-              <button type="button" class="btn-nineth">show diff</button><br>
-              <button type="button" class="btn-tenth">show progress bar</button><br>
-              <button type="button" class="btn-eleventh">publish data via event</button><br>
               <script nonce="${nonce}" src="${scriptUri}"></script>
            </body>
         </html>`;

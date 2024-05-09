@@ -4,7 +4,6 @@ import { registerCacheCommand } from './extension/features/cache-operation';
 import { registerCallbackRequest } from './extension/features/register-callback-request';
 import { registerDevToolCommand } from './extension/features/register-dev-tool';
 import { registerWelcomeMessage } from './extension/features/register-welcome-message';
-import { CustomEvent } from './extension/views/custom-event';
 import { registerCenterPanel } from './extension/views/register-center-panel';
 import { registerWebViewProvider } from "./extension/views/register-webview-provider";
 
@@ -18,8 +17,6 @@ export function activate(context: ExtensionContext) {
 	registerCenterPanel(context);
 	registerIntelligence(context);
 	commands.executeCommand('setContext', 'isPrintContextMenu', true);
-
-	CustomEvent.customEvent.subscribe(data => window.showInformationMessage('Message from event: ' + data));
 }
 
 export function deactivate() { }
