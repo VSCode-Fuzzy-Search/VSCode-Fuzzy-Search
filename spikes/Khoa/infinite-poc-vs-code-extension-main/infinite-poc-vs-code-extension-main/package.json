@@ -1,0 +1,208 @@
+{
+  "name": "infinite-poc",
+  "publisher": "ng",
+  "displayName": "Infinite POC",
+  "description": "Vs code extension poc",
+  "version": "0.0.1",
+  "icon": "media/icons/logo.png",
+  "engines": {
+    "vscode": "^1.72.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*",
+    "onCommand:infinite-poc.dialog-modal-message"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/narottamgoyal/infinite-poc-vs-code-extension.git"
+  },
+  "main": "./dist/extension.js",
+  "contributes": {
+    "snippets": [
+      {
+        "language": "javascript",
+        "path": "./snippets/javascript-snippets.code-snippets"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "infinite-poc-view",
+          "title": "Infinite POC",
+          "icon": "media/icons/infinity-svgrepo-com.svg"
+        }
+      ]
+    },
+    "views": {
+      "infinite-poc-view": [
+        {
+          "type": "webview",
+          "id": "infinite-poc-sidebar-panel",
+          "name": "Infinite POC",
+          "icon": "media/icons/beaker.svg"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "infinite-poc.dialog-modal-message",
+        "title": "Show Dialog Modal Message",
+        "category": "ipoc"
+      },
+      {
+        "command": "infinite-poc.ask-user",
+        "title": "Ask user a question?",
+        "category": "ipoc"
+      },
+      {
+        "command": "ipoc.print.explorer.menu",
+        "title": "Print text in output channel",
+        "category": "ipoc"
+      },
+      {
+        "command": "ipoc.print.editor.menu",
+        "title": "Send & Print text in output channel",
+        "category": "ipoc"
+      },
+      {
+        "command": "ipoc.show.cache",
+        "title": "Show cache",
+        "category": "ipoc"
+      },
+      {
+        "command": "ipoc.clear.cache",
+        "title": "Clear Cache",
+        "category": "ipoc"
+      },
+      {
+        "command": "ipoc.show.secret.storage",
+        "title": "Show value from Secret Storage",
+        "category": "ipoc"
+      },
+      {
+        "command": "ipoc.show.center.panel",
+        "title": "Show center panel",
+        "category": "ipoc"
+      },
+      {
+        "command": "ipoc.send.data",
+        "title": "transfer Data From Ts To Ui",
+        "category": "ipoc"
+      }
+    ],
+    "submenus": [
+      {
+        "id": "ipoc.editor.menu",
+        "label": "IPOC from editor",
+        "icon": "$(code)"
+      },
+      {
+        "id": "ipoc.explorer.menu",
+        "label": "IPOC from explorer",
+        "icon": "$(code)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "ipoc.print.explorer.menu",
+          "when": "false"
+        },
+        {
+          "command": "ipoc.print.editor.menu",
+          "when": "false"
+        },
+        {
+          "command": "ipoc.send.data",
+          "when": "false"
+        }
+      ],
+      "explorer/context": [
+        {
+          "submenu": "ipoc.explorer.menu",
+          "group": "navigation@1",
+          "when": "resourceLangId == javascript"
+        }
+      ],
+      "ipoc.explorer.menu":[
+        {
+          "command": "ipoc.print.explorer.menu",
+          "group": "commands@1",
+          "when": "resourceLangId == javascript"
+        }
+      ],
+      "editor/context": [
+        {
+          "submenu": "ipoc.editor.menu",
+          "group": "navigation@1",
+          "when": "resourceLangId == javascript"
+        }
+      ],
+      "ipoc.editor.menu":[
+        {
+          "command": "ipoc.print.editor.menu",
+          "group": "commands@1",
+          "when": "isPrintContextMenu && resourceLangId == javascript"
+        }
+      ]
+    },
+    "configuration": {
+        "title": "Infinite POC",
+        "properties": {
+          "ipoc.welcom.message.enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "enable/disable welcome message"
+          },
+          "ipoc.welcom.message.emoji": {
+            "type": "string",
+            "enum": ["👋", "😄", "😎"],
+            "default": "👋",
+            "description": "select emoji"
+        },
+        "ipoc.welcom.message.string": {
+          "type": "string",
+          "description": "please enter welcome message",
+          "default": "Welcome to the ipoc extension!"
+        },
+        "ipoc.open.browser.sites": {
+        "type": "array",
+        "items": {
+          "type": "string"
+          },
+          "default":["https://www.youtube.com/c/InfinitePOC", "https://www.google.com/"]
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.72.0",
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "eslint": "^8.24.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "typescript": "^4.8.4",
+    "ts-loader": "^9.4.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "@vscode/test-electron": "^2.1.5"
+  }
+}
