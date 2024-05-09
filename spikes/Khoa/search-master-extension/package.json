@@ -1,8 +1,8 @@
 {
-  "name": "infinite-poc",
+  "name": "search-master",
   "publisher": "ng",
   "displayName": "Search Master",
-  "description": "Vs code extension poc",
+  "description": "VScode Search Engine extension",
   "version": "0.0.1",
   "icon": "media/icons/logo.png",
   "engines": {
@@ -12,8 +12,7 @@
     "Other"
   ],
   "activationEvents": [
-    "*",
-    "onCommand:infinite-poc.dialog-modal-message"
+    "*"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -43,16 +42,6 @@
       ]
     },
     "commands": [
-      {
-        "command": "infinite-poc.dialog-modal-message",
-        "title": "Show Dialog Modal Message",
-        "category": "searchmaster"
-      },
-      {
-        "command": "infinite-poc.ask-user",
-        "title": "Ask user a question?",
-        "category": "searchmaster"
-      },
       {
         "command": "searchmaster.print.explorer.menu",
         "title": "Print text in output channel",
