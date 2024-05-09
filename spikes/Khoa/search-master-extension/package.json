@@ -1,7 +1,7 @@
 {
   "name": "infinite-poc",
   "publisher": "ng",
-  "displayName": "Infinite POC",
+  "displayName": "Search Master",
   "description": "Vs code extension poc",
   "version": "0.0.1",
   "icon": "media/icons/logo.png",
@@ -15,10 +15,6 @@
     "*",
     "onCommand:infinite-poc.dialog-modal-message"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/narottamgoyal/infinite-poc-vs-code-extension.git"
-  },
   "main": "./dist/extension.js",
   "contributes": {
     "snippets": [
@@ -31,7 +27,7 @@
       "activitybar": [
         {
           "id": "Search-master",
-          "title": "Infinite POC",
+          "title": "Search Master",
           "icon": "media/icons/infinity-svgrepo-com.svg"
         }
       ]
@@ -41,7 +37,7 @@
         {
           "type": "webview",
           "id": "search-master-sidebar-panel",
-          "name": "Infinite POC",
+          "name": "Search Master",
           "icon": "media/icons/beaker.svg"
         }
       ]
@@ -150,7 +146,7 @@
       ]
     },
     "configuration": {
-        "title": "Infinite POC",
+        "title": "Search Master",
         "properties": {
           "searchmaster.welcom.message.enabled": {
             "type": "boolean",

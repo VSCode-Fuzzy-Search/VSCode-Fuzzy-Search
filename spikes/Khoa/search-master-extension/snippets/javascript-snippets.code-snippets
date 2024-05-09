@@ -8,9 +8,9 @@
 		"scope": "javascript",
         "prefix": "print",
 		"body": [
-			"console.log('infinite poc extension', '$1');",
+			"console.log('Search Master extension', '$1');",
 			"$2"
 		],
-		"description": "Add prefix 'infinite poc extension' to console log"
+		"description": "Add prefix 'Search Master extension' to console log"
 	}
 }

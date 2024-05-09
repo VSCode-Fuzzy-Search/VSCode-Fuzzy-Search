@@ -1,4 +1,4 @@
-# Infinite POC for Visual Studio Code
+# Search Master for Visual Studio Code
 
 This extension will demonstrate most of the vs code extension capabilities.
 
