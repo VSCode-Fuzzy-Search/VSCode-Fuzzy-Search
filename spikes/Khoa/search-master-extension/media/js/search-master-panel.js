@@ -110,7 +110,22 @@
             case "transferDataFromTsToUi":
                 txtbox.value = message.data;
                 break;
+            case 'displayResults':
+                console.log("abc");
+                const outputDiv = document.getElementById('output');
+                outputDiv.innerHTML = '';
+                if (message.files.length > 0) {
+                    message.files.forEach(file => {
+                        const p = document.createElement('p');
+                        p.textContent = `Found keyword in: ${file}`;
+                        outputDiv.appendChild(p);
+                    });
+                } else {
+                    const p = document.createElement('p');
+                    p.textContent = 'No matching files found.';
+                    outputDiv.appendChild(p);
+                }
+                break;
         }
     });
-
 }());

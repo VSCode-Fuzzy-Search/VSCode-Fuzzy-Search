@@ -89,31 +89,25 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
                 }
                 case 'btn-sixth': {
                     const keyword = data.value.toLowerCase();
-                    // Search all text files in the first workspace folder
                     if (vscode.workspace.workspaceFolders) {
-                        const searchPattern = new vscode.RelativePattern(vscode.workspace.workspaceFolders[0], '**/*.txt'); // Adjust the pattern to target specific files
+                        const searchPattern = new vscode.RelativePattern(vscode.workspace.workspaceFolders[0], '**/*.txt');
                         vscode.workspace.findFiles(searchPattern).then(files => {
                             const searchResults: string[] = [];
-                            files.forEach(file => {
+                            const filePromises = files.map(file => 
                                 vscode.workspace.openTextDocument(file).then(document => {
                                     const text = document.getText();
                                     if (text.toLowerCase().includes(keyword)) {
-                                        searchResults.push(file.fsPath); // Collect matching file paths
+                                        searchResults.push(file.fsPath);
                                         vscode.window.showInformationMessage(`Found keyword in: ${file.fsPath}`);
                                     }
+                                })
+                            );
+                            Promise.all(filePromises).then(() => {
+                                this.view?.webview.postMessage({
+                                    type: 'displayResults',
+                                    files: searchResults
                                 });
                             });
-                            // After processing all files, you can send these results back to your webview if necessary
-                            setTimeout(() => {
-                                if (searchResults.length > 0) {
-                                    this.view?.webview.postMessage({
-                                        type: 'displayResults',
-                                        files: searchResults
-                                    });
-                                } else {
-                                    vscode.window.showInformationMessage('No matching files found.');
-                                }
-                            }, 3000); // Adjust timeout as needed based on expected file counts and sizes
                         });
                     } else {
                         vscode.window.showInformationMessage('No workspace open.');
@@ -159,6 +153,8 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
               <button type="button" class="btn-fourth">Fuzzy search</button><br>
               <button type="button" class="btn-fifth">VSCode search</button><br>
               <button type="button" class="btn-sixth">Brute Force search</button><br>
+              <div>Output: </div>
+              <div id="output"></div>
               <script nonce="${nonce}" src="${scriptUri}"></script>
            </body>
         </html>`;
