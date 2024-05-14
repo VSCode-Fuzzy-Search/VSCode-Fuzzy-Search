@@ -4,7 +4,6 @@
   "displayName": "Search Master",
   "description": "VScode Search Engine extension",
   "version": "0.0.1",
-  "icon": "media/icons/logo.png",
   "engines": {
     "vscode": "^1.72.0"
   },
@@ -27,7 +26,7 @@
         {
           "id": "Search-master",
           "title": "Search Master",
-          "icon": "media/icons/infinity-svgrepo-com.svg"
+          "icon": "media/icons/research-svgrepo-com.svg"
         }
       ]
     },
@@ -37,7 +36,7 @@
           "type": "webview",
           "id": "search-master-sidebar-panel",
           "name": "Search Master",
-          "icon": "media/icons/beaker.svg"
+          "icon": "media/icons/search-data-svgrepo-com.svg"
         }
       ]
     },
