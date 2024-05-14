@@ -142,6 +142,27 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
               <link href="${styleResetUri}" rel="stylesheet">
               <link href="${styleVSCodeUri}" rel="stylesheet">
               <script nonce="${nonce}"></script>
+              <style>
+            .output-container {
+              border: 1px solid #ddd;
+              border-radius: 4px;
+              padding: 16px;
+              margin-top: 16px;
+              background-color: #5D3FD3;
+            }
+            .output-container p {
+              margin: 0;
+              padding: 8px;
+              border-bottom: 1px solid #eee;
+            }
+            .output-container p:last-child {
+              border-bottom: none;
+            }
+            .output-container .output-title {
+              font-weight: bold;
+              margin-bottom: 8px;
+            }
+          </style>
            </head>
            <body>
               <div>Search Engines</div>
@@ -153,7 +174,8 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
               <button type="button" class="btn-fourth">Fuzzy search</button><br>
               <button type="button" class="btn-fifth">VSCode search</button><br>
               <button type="button" class="btn-sixth">Brute Force search</button><br>
-              <div id="output"></div>
+              <div id="output" class="output-container"> </div>
+          </div>
               <script nonce="${nonce}" src="${scriptUri}"></script>
            </body>
         </html>`;

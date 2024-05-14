@@ -32,7 +32,7 @@
         const message = event.data;
         if (message.type === 'displayResults') {
             const outputDiv = document.getElementById('output');
-            outputDiv.innerHTML = `<div>Output: </div>`;
+            outputDiv.innerHTML = `<div class="output-title">Output:</div>`;
             if (message.files.length > 0) {
                 outputDiv.innerHTML += `<p> Found keyword in: </p>`;
                 message.files.forEach(file => {
