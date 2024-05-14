@@ -1,5 +1,6 @@
 import { damerau_levenshtein } from "./damerau-levenshtein";
 import { levenshtein } from "./levenshtein";
+import { AlgoEnum } from "./algo-enum";
 
 import * as fs from 'fs';
 
@@ -14,13 +15,32 @@ function getWords(filepath: string): string[] {
 }
 
 /**
+ * Runs the respective edit-distance algorithm 
+ * 
+ * @param source - source word for edit-distance algorithm
+ * @param target - target word for edit-distance algorithm
+ * @param algorithm - algorithm value corresponding to enum
+ * @returns edit-distance between target and source
+ */
+function chooseAlgorithm(source: string, target: string, algorithm: string): number {
+    switch (algorithm) {
+        case AlgoEnum.Levenhstein:
+            return levenshtein(source, target);
+        case AlgoEnum.Damerau:
+            return damerau_levenshtein(source, target);
+        default:
+            throw new Error("unsupported algorithm");
+    }
+}
+
+/**
  * Determines the most similar words in a wordlist to a query based on some edit-distance threshold
  * 
  * @param query - source word 
  * @param wordlist - list of words
  * @returns list of similar words
  */
-function getSimilarWords(query: string, wordlist: string[], algorithm: string): string[] {
+function getSimilarWords(query: string, wordlist: string[], algorithm: string = ""): string[] {
     const EDIT_DISTANCE_THRESHOLD = 3;
 
     let similarWords: string[] = [];
@@ -34,15 +54,6 @@ function getSimilarWords(query: string, wordlist: string[], algorithm: string): 
     return similarWords;
 }
 
-function chooseAlgorithm(source: string, target: string, algorithm: string): number {
-    if (algorithm == "L") {
-        return levenshtein(source, target);
-    } else if (algorithm == "DL") {
-        return damerau_levenshtein(source, target);
-    } 
-    return -1;
-}
-
 /**
  * Returns the N closest edit-distance strings from a word list to a query
  * 
@@ -50,10 +61,10 @@ function chooseAlgorithm(source: string, target: string, algorithm: string): num
  * @param word_list - list of words
  * @returns a list of strings
  */
-function find_closest(query: string, word_list: string[], num_results: number): string[] {
+function find_closest(query: string, word_list: string[], num_results: number, algorithm: string = ""): string[] {
     const distances = word_list.map(word => ({
         word,
-        distance: levenshtein(query, word)
+        distance: chooseAlgorithm(query, word, algorithm)
     }));
 
     distances.sort((a, b) => a.distance - b.distance);
@@ -67,11 +78,17 @@ function find_closest(query: string, word_list: string[], num_results: number): 
 const filepath = 'wordlist-10000.txt';
 const wordList = getWords(filepath);
 const process = require('process');
+console.log();
+console.log('words within edit-distance threshold:');
 console.log(getSimilarWords(process.argv[2], wordList, process.argv[3]));
 
-// TODO
-//  - enum for algorithm
-//  - fix DL (wrong number for some cases)
-//      - test cases!!
+console.log();
+console.log(`4 nearest words:`);
+console.log(find_closest(process.argv[2], wordList, 10, process.argv[3]));
 
+// TODO
+//  - test cases!!
+
+// rank results on edit distance as well
+// user might want to query edit-distance
 
