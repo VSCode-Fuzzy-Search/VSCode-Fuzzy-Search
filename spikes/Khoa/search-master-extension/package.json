@@ -4,6 +4,7 @@
   "displayName": "Search Master",
   "description": "VScode Search Engine extension",
   "version": "0.0.1",
+  "icon": "media/icons/research-svgrepo-com.png",
   "engines": {
     "vscode": "^1.72.0"
   },
