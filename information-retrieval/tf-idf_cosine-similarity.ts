@@ -256,7 +256,6 @@ function cosine_similarity(v1: Vector, v2: Vector): number {
 
  }
 
-debugger;
 const d1 = "the best Italian restaurant enjoy the best pasta";
 const d2 = "American restaurant enjoy the best hamburger";
 const d3 = "Korean restaurant enjoy the best bibimbap";

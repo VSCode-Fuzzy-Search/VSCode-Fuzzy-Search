@@ -1,40 +1,38 @@
 /**
  * Returns the edit distance between two strings using the Levenhstein algorithm
  * 
- * @param str1 - the first string
- * @param str2 - the second string
+ * @param target - the target word
+ * @param source - the source word
  * @returns the bottom right element from the calculated table
  */
-export function levenshtein(str1: string, str2: string): number {
+export function levenshtein(target: string, source: string): number {
+    target = " " + target;
+    source = " " + source;
 
-    str1 = " " + str1;
-    str2 = " " + str2;
+    let table: number[][] = new Array(target.length);
 
-    let table: number[][] = new Array(str2.length);
-
-    for (let i = 0; i < str2.length; i++) {
-        table[i] = new Array(str1.length);
+    for (let i = 0; i < target.length; i++) {
+        table[i] = new Array(source.length);
     }   
 
     table[0][0] = 0;
-    for (let i = 1; i < str1.length; i++) {
-        table[0][i] = i;
+    for (let j = 1; j < source.length; j++) {
+        table[0][j] = j;
     }
-    for (let j = 1; j < str2.length; j++) {
-        table[j][0] = j;
+    for (let i = 1; i < target.length; i++) {
+        table[i][0] = i;
     }
 
-    for (let i = 1; i < str1.length; i++) {
-        for (let j = 1; j < str2.length; j++) {
-            let minimum = Math.min(table[j][i-1], table[j-1][i], table[j-1][i-1]);
-            if (str1[i] == str2[j] && i == j) {
-                table[j][i] = minimum;
+    for (let i = 1; i < target.length; i++) {
+        for (let j = 1; j < source.length; j++) {
+            let minimum = Math.min(table[i][j-1], table[i-1][j], table[i-1][j-1]);
+            if (target[i] == source[j]) {
+                table[i][j] = minimum;
             } else {
-              table[j][i] = minimum + 1;
+                table[i][j] = minimum + 1;
             }
         }
     }
 
-    return table[str2.length - 1][str1.length - 1];
-
+    return table[target.length - 1][source.length - 1];
 }
