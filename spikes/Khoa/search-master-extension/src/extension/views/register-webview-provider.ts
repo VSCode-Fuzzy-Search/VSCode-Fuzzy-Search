@@ -98,7 +98,6 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
                                     const text = document.getText();
                                     if (text.toLowerCase().includes(keyword)) {
                                         searchResults.push(file.fsPath);
-                                        vscode.window.showInformationMessage(`Found keyword in: ${file.fsPath}`);
                                     }
                                 })
                             );
