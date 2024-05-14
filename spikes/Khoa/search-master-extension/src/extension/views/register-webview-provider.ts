@@ -1,6 +1,7 @@
 import { CancellationToken, commands, ExtensionContext, OutputChannel, Uri, Webview, WebviewView, WebviewViewProvider, WebviewViewResolveContext, window } from "vscode";
 import { getNonce } from "../util";
 import { CenterPanel } from "./register-center-panel";
+import * as vscode from 'vscode';
 
 export function readSelectedOrAllText(op: OutputChannel) {
     op.clear();
@@ -52,10 +53,9 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
                     break;
                 }
                 case 'btn-second': {
-                    this.extensionContext.globalState.update('searchmasterCacheKey', data.value);
-                    window.showInformationMessage('Value saved in cache: ' + data.value);
+                    window.showInformationMessage('Value saved in SecretStorage: ' + data.value);
                     break;
-                }
+                }                                   
                 case 'btn-third': {
                     this.extensionContext.secrets.store('searchmasterCacheKey', data.value);
                     window.showInformationMessage('Value saved in SecretStorage: ' + data.value);
@@ -64,6 +64,60 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
                 case 'btn-fourth': {
                     this.extensionContext.workspaceState.update('searchmasterCacheKey', data.value);
                     window.showInformationMessage('Value saved in cache: ' + data.value);
+                    break;
+                }
+                case 'btn-fifth': {
+                    const keyword = data.value;
+                    try {
+                        // Await the completion of the command execution
+                        await vscode.commands.executeCommand('workbench.action.findInFiles', {
+                            query: keyword,
+                            triggerSearch: true,
+                            isCaseSensitive: false,
+                            isRegex: false,
+                            matchWholeWord: false,
+                            filesToInclude: "**/*",  // Include all files, adjust as necessary
+                            filesToExclude: "",      // Exclude no files, adjust as necessary
+                            useExcludeSettingsAndIgnoreFiles: true
+                        });
+                        vscode.window.showInformationMessage('Search triggered with keyword: ' + keyword);
+                    } catch (error) {
+                        // Handle any errors that occur during the command execution
+                        vscode.window.showInformationMessage('Error triggering search: ' + error);
+                    }
+                    break;
+                }
+                case 'btn-sixth': {
+                    const keyword = data.value.toLowerCase();
+                    // Search all text files in the first workspace folder
+                    if (vscode.workspace.workspaceFolders) {
+                        const searchPattern = new vscode.RelativePattern(vscode.workspace.workspaceFolders[0], '**/*.txt'); // Adjust the pattern to target specific files
+                        vscode.workspace.findFiles(searchPattern).then(files => {
+                            const searchResults: string[] = [];
+                            files.forEach(file => {
+                                vscode.workspace.openTextDocument(file).then(document => {
+                                    const text = document.getText();
+                                    if (text.toLowerCase().includes(keyword)) {
+                                        searchResults.push(file.fsPath); // Collect matching file paths
+                                        vscode.window.showInformationMessage(`Found keyword in: ${file.fsPath}`);
+                                    }
+                                });
+                            });
+                            // After processing all files, you can send these results back to your webview if necessary
+                            setTimeout(() => {
+                                if (searchResults.length > 0) {
+                                    this.view?.webview.postMessage({
+                                        type: 'displayResults',
+                                        files: searchResults
+                                    });
+                                } else {
+                                    vscode.window.showInformationMessage('No matching files found.');
+                                }
+                            }, 3000); // Adjust timeout as needed based on expected file counts and sizes
+                        });
+                    } else {
+                        vscode.window.showInformationMessage('No workspace open.');
+                    }
                     break;
                 }
             }
@@ -100,9 +154,11 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
               <div>Input: </div>
               <input type="text" class="txt-box" id="searchmastervalueid" name="searchmastervaluename"><br>
               <button type="button" class="btn-first">Boolean Retrieval</button><br>
-              <button type="button" class="btn-second">Vector Space Model</button><br>
+              <button type="button" class="btn-second">Vector Space Model</button>
               <button type="button" class="btn-third">Language Model</button><br>
               <button type="button" class="btn-fourth">Fuzzy search</button><br>
+              <button type="button" class="btn-fifth">VSCode search</button><br>
+              <button type="button" class="btn-sixth">Brute Force search</button><br>
               <script nonce="${nonce}" src="${scriptUri}"></script>
            </body>
         </html>`;
