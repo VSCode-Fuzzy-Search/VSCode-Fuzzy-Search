@@ -153,7 +153,6 @@ export class SidebarWebViewProvider implements WebviewViewProvider {
               <button type="button" class="btn-fourth">Fuzzy search</button><br>
               <button type="button" class="btn-fifth">VSCode search</button><br>
               <button type="button" class="btn-sixth">Brute Force search</button><br>
-              <div>Output: </div>
               <div id="output"></div>
               <script nonce="${nonce}" src="${scriptUri}"></script>
            </body>
